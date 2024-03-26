@@ -13,7 +13,11 @@ let editFlag = false;
 let editID = '';
 
 // ****** EVENT LISTENERS **********
-form.addEventListener('submit', addItem)
+//submit form
+form.addEventListener('submit', addItem);
+// clear items
+clearBtn.addEventListener('click', clearItems);
+
 
 // ****** FUNCTIONS **********
 function addItem(e) {
@@ -33,20 +37,25 @@ function addItem(e) {
                 <button class="edit-btn">
                     <i class="fas fa-edit"></i>
                 </button>
-                <button class="delete">
+                <button class="delete-btn">
                     <i class="fas fa-trash"></i>
                 </button>
             </div>`
+        const deleteBtn = element.querySelector('delete-btn')
+        const editBtn = element.querySelector('edit-btn')
+        deleteBtn.addEventListener('click', deleteItem);
+        editBtn.addEventListener('click', editItem);
         // append child
-        list.appendChild(element)
+        list.appendChild(element);
         // display alert
-        displayAlert('item added to the list', 'success')
+        displayAlert('item added to the list', 'success');
         // show container 
-        container.classList.add('show-container')
+        container.classList.add('show-container');
+        
         // add to local storage
-        addToLocalStorage(id, value)
+        addToLocalStorage(id, value);
         // set back to default
-        setBackDefault()
+        setBackToDefault();
     }
     else if(value && editFlag){
         console.log('editing')
@@ -66,14 +75,40 @@ function displayAlert(text, action){
         alert.classList.remove(`alert-${action}`);
     }, 1000);
 }
+// clear items
+function clearItems(){
+    const items = document.querySelectorAll('.grocery-item');
+
+    if (items.length > 0) {
+        items.forEach(function (item) {
+            list.removeChild(item);
+        });
+    }
+    container.classList.remove("show-container")
+    displayAlert('empty list', 'danger')
+    setBackToDefault()    
+    //localStorage.removeItem('list)
+}
+// delete function
+function deleteItem(){
+    console.log('item deleted');
+}
+// edit function 
+function editItem(){
+    console.log('item deleted');
+}
 // set back to default
 function setBackToDefault(){
-    console.log('set back to default')
+    grocery.value = '';
+    editFlag = false;
+    editID = '';
+    submitBtn.textContent = 'submit';
 }
 
 // ****** LOCAL STORAGE **********
 function addToLocalStorage(id,value) {
-    console.log('add to localstorage')
+    console.log('add to local storage')
 }
 
 // ****** SETUP ITEMS **********
+// 7h 20
